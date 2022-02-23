@@ -218,6 +218,7 @@ vector<ClientGroup *> read_resource_config(const char *file_path) {
   vector<ClientGroup *> new_client_groups;
 
   // Read GPU limit usage
+  DEBUG("config filepath %s", file_path);
   ConfigFile config_file(file_path);
   for (string group_name : config_file.getGroups()) {
     ClientGroup *group;
