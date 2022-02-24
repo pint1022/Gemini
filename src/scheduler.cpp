@@ -480,6 +480,7 @@ void *clientGroupMgmt(void *args) {
   ClientGroup *group = static_cast<ClientGroup *>(args);
   char url[PATH_MAX];
   snprintf(url, PATH_MAX, "ipc://%s/%s", ipc_dir, group->getName().c_str());
+  DEBUG("client ipc url %s", url);
   Responder responder(zeromq_context, url);
 
   // allocated memory size and last heartbeat record of each client (peer)
