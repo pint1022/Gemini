@@ -98,6 +98,7 @@ auto PROGRESS_START = steady_clock::now();
 // program options
 char limit_file[PATH_MAX] = "resource.conf";
 char ipc_dir[PATH_MAX] = "/tmp/gemini/ipc";
+char guuid[PATH_MAX] = "";
 
 void *zeromq_context;  // global zeromq context
 // map client name to pointer of ClientGroup
@@ -604,7 +605,7 @@ int main(int argc, char *argv[]) {
   while ((opt = getopt_long(argc, argv, optstring, opts, NULL)) != -1) {
     switch (opt) {
       case 'p':
-        strncpy(ipc_dir, optarg, PATH_MAX);
+        strncpy(limit_file, optarg, PATH_MAX);
         break;
       case 'q':
         QUOTA = atof(optarg);
@@ -616,7 +617,7 @@ int main(int argc, char *argv[]) {
         WINDOW_SIZE = atof(optarg);
         break;
       case 'f':
-        strncpy(limit_file, optarg, PATH_MAX);
+        strncpy(guuid, optarg, PATH_MAX);
         break;
       case 'v':
         verbosity = atoi(optarg);
@@ -652,7 +653,7 @@ int main(int argc, char *argv[]) {
   zeromq_context = zmq_ctx_new();
 
   // read configuration file
-  vector<ClientGroup *> groups = read_resource_config(limit_file);
+  // vector<ClientGroup *> groups = read_resource_config(limit_file);
 
   // create directory for IPC files
   if (g_mkdir_with_parents(ipc_dir, 0777) == 0) {
@@ -677,7 +678,7 @@ int main(int argc, char *argv[]) {
   }
   pthread_detach(tid);
 
-  spawnClientGroupThreads(groups);
+  // spawnClientGroupThreads(groups);
 
   // Watch for newcomers (new ClientGroup).
   GError *err = nullptr;
