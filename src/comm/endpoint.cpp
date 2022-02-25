@@ -15,6 +15,7 @@
  */
 
 #include "endpoint.hpp"
+#include "../debug.h"
 
 #include <stdexcept>
 
@@ -98,6 +99,7 @@ int Requester::submit(Request &request, Response *response_ptr) {
 
 Responder::Responder(void *ctx, const char *url) : Endpoint(ctx, ZMQ_REP) {
   if (zmq_bind(socket_, url) == -1) {
+    ERROR("Responder %d: url %s", __LINE__, url);
     throw std::runtime_error("zmq_bind failed: " + getZmqErrorMsg());
   }
 }
