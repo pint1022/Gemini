@@ -81,6 +81,15 @@ gem-schd: scheduler.o schd-priority.o debug.o parse-config.o comm
 	mkdir -p $(PREFIX)/bin
 	$(INSTALL) -s -m 755 -t $(PREFIX)/bin $@
 
+
+pod-manager.o: pod-manager.cpp debug.h comm.h util.h
+	$(EXEC) g++ $(CXXFLAGS) -o $@ -c $<
+
+gem-pmgr: pod-manager.o debug.o comm.o
+	$(EXEC) g++ $(LDFLAGS) -pthread -rdynamic $+ -o $@
+	$(EXEC) mkdir -p $(PREFIX)/bin
+	$(EXEC) cp $@ $(PREFIX)/bin
+	
 comm:
 	@$(MAKE) -C comm
 
