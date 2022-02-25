@@ -49,7 +49,7 @@ LDFLAGS += $(foreach ext,$(EXTLIBS),$(shell $(PKGCONFIG) --libs $(ext)))
 # Target rules
 .PHONY: comm
 
-all: libgemhook.so.1 gem-schd
+all: libgemhook.so.1 gem-schd gem-pmgr
 
 debug.o: debug.cpp debug.h
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
@@ -89,7 +89,7 @@ gem-pmgr: pod-manager.o debug.o comm.o
 	$(EXEC) g++ $(LDFLAGS) -pthread -rdynamic $+ -o $@
 	$(EXEC) mkdir -p $(PREFIX)/bin
 	$(EXEC) cp $@ $(PREFIX)/bin
-	
+
 comm:
 	@$(MAKE) -C comm
 
