@@ -102,6 +102,7 @@ Responder::Responder(void *ctx, const char *url) : Endpoint(ctx, ZMQ_REP) {
     ERROR("Responder %d: url %s", __LINE__, url);
     throw std::runtime_error("zmq_bind failed: " + getZmqErrorMsg());
   }
+  DEBUG("Responder %d: url %s", __LINE__, url);
 }
 
 int Responder::getRequest(Request *request_ptr) {
