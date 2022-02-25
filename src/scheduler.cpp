@@ -657,7 +657,9 @@ int main(int argc, char *argv[]) {
 
   // read configuration file
   // DEBUG("%d: limit_file  %s ", __LINE__, limit_file);
-  vector<ClientGroup *> groups = read_resource_config(limit_file);
+  char fullpath[PATH_MAX];
+  snprintf(fullpath, PATH_MAX, "ipc://%s/%s", ipc_dir, limit_file);
+  vector<ClientGroup *> groups = read_resource_config(fullpath);
 
   // create directory for IPC files
   if (g_mkdir_with_parents(ipc_dir, 0777) == 0) {
