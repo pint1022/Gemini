@@ -132,7 +132,7 @@ ClientGroup::ClientGroup(std::string name, int cid, double baseq, double minq)
 ClientGroup::~ClientGroup() { sem_destroy(&token_sem_); };
 
 const string &ClientGroup::getName() { return kName; };
-const string &ClientGroup::getID() { return clientID; };
+const int ClientGroup::getID() { return clientID; };
 
 void ClientGroup::updateConstraint(double minf, double maxf, double maxq, size_t mem_limit) {
   min_frac_ = minf;

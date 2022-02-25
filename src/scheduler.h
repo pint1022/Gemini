@@ -38,7 +38,7 @@ class ClientGroup {
   ClientGroup(std::string name, int cid, double baseq, double minq);
   ~ClientGroup();
   const std::string &getName();
-  const std::string &getID();
+  const int getID();
   void updateConstraint(double minf, double maxf, double maxq, size_t mem_limit);
   void updateReturnTime(double overuse);
   void setBurst(double burst);
