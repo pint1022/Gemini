@@ -608,7 +608,7 @@ int main(int argc, char *argv[]) {
   while ((opt = getopt_long(argc, argv, optstring, opts, NULL)) != -1) {
     switch (opt) {
       case 'p':
-        strncpy(limit_file, optarg, PATH_MAX);
+        strncpy(ipc_dir, optarg, PATH_MAX);
         break;
       case 'q':
         QUOTA = atof(optarg);
@@ -620,7 +620,7 @@ int main(int argc, char *argv[]) {
         WINDOW_SIZE = atof(optarg);
         break;
       case 'f':
-        strncpy(guuid, optarg, PATH_MAX);
+        strncpy(limit_file, optarg, PATH_MAX);
         break;
       case 'v':
         verbosity = atoi(optarg);
