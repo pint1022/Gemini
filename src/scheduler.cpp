@@ -96,6 +96,7 @@ int verbosity = 0;
 auto PROGRESS_START = steady_clock::now();
 
 // program options
+char config_dir[PATH_MAX] = "/kubshare/scheduler/config/";
 char limit_file[PATH_MAX] = "resource.conf";
 char ipc_dir[PATH_MAX] = "/tmp/gemini/ipc";
 char guuid[PATH_MAX] = "";
@@ -658,7 +659,7 @@ int main(int argc, char *argv[]) {
   // read configuration file
   // DEBUG("%d: limit_file  %s ", __LINE__, limit_file);
   char fullpath[PATH_MAX];
-  snprintf(fullpath, PATH_MAX, "ipc://%s/%s", ipc_dir, limit_file);
+  snprintf(fullpath, PATH_MAX, "%s/%s", ipc_dir, limit_file);
   vector<ClientGroup *> groups = read_resource_config(fullpath);
 
   // create directory for IPC files
