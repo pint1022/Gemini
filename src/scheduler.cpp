@@ -482,7 +482,7 @@ void *clientGroupMgmt(void *args) {
   char url[PATH_MAX];
   snprintf(url, PATH_MAX, "ipc://%s/%s", ipc_dir, group->getName().c_str());
   // snprintf(url, PATH_MAX, "ipc://%s/%s", ipc_dir, group->getID().c_str());
-  DEBUG("client ipc url %s", url);
+  DEBUG("clientgmr %d  url %s", __LINE__, url);
   Responder responder(zeromq_context, url);
 
   // allocated memory size and last heartbeat record of each client (peer)
@@ -656,7 +656,7 @@ int main(int argc, char *argv[]) {
   zeromq_context = zmq_ctx_new();
 
   // read configuration file
-  // vector<ClientGroup *> groups = read_resource_config(limit_file);
+  vector<ClientGroup *> groups = read_resource_config(limit_file);
 
   // create directory for IPC files
   if (g_mkdir_with_parents(ipc_dir, 0777) == 0) {
@@ -681,7 +681,7 @@ int main(int argc, char *argv[]) {
   }
   pthread_detach(tid);
 
-  // spawnClientGroupThreads(groups);
+  spawnClientGroupThreads(groups);
 
   // Watch for newcomers (new ClientGroup).
   GError *err = nullptr;
