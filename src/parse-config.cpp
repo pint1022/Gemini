@@ -29,7 +29,8 @@ ConfigFile::ConfigFile(const char *filename) {
   if (!g_key_file_load_from_file(keyfile_, filename, G_KEY_FILE_NONE, &err)) {
     char msg[256];
     snprintf(msg, sizeof(msg), "%s (file: %s)", err->message, filename);
-    throw std::runtime_error(msg);
+    // throw std::runtime_error(msg);
+    return;
   }
 
   gsize n_group;
