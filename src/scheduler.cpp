@@ -681,7 +681,7 @@ int main(int argc, char *argv[]) {
   }
   pthread_detach(tid);
 
-  INFO("There are % clients in the system...\n", groups.size();
+  INFO("There are %d clients in the system...\n", groups.size());
   spawnClientGroupThreads(groups);
 
   // Watch for newcomers (new ClientGroup).
