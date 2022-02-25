@@ -120,8 +120,8 @@ inline double ms_since_start() {
   return duration_cast<microseconds>(steady_clock::now() - PROGRESS_START).count() / 1e3;
 }
 
-ClientGroup::ClientGroup(std::string name, int cid, double baseq, double minq)
-    : kName(name), clientID(cid),kBaseQuota(baseq), kMinQuota(minq) {
+ClientGroup::ClientGroup(std::string name, double baseq, double minq)
+    : kName(name),kBaseQuota(baseq), kMinQuota(minq) {
   quota_ = baseq;
   latest_overuse_ = 0.0;
   latest_actual_usage_ = 0.0;
@@ -132,7 +132,7 @@ ClientGroup::ClientGroup(std::string name, int cid, double baseq, double minq)
 ClientGroup::~ClientGroup() { sem_destroy(&token_sem_); };
 
 const string &ClientGroup::getName() { return kName; };
-const int ClientGroup::getID() { return clientID; };
+// const int ClientGroup::getID() { return clientID; };
 
 void ClientGroup::updateConstraint(double minf, double maxf, double maxq, size_t mem_limit) {
   min_frac_ = minf;
@@ -480,8 +480,8 @@ size_t removeDeadPeers(std::map<string, MemoryUsageRecord> &peers_status) {
 void *clientGroupMgmt(void *args) {
   ClientGroup *group = static_cast<ClientGroup *>(args);
   char url[PATH_MAX];
-  // snprintf(url, PATH_MAX, "ipc://%s/%s", ipc_dir, group->getName().c_str());
-  snprintf(url, PATH_MAX, "ipc://%s/%s", ipc_dir, group->getID().c_str());
+  snprintf(url, PATH_MAX, "ipc://%s/%s", ipc_dir, group->getName().c_str());
+  // snprintf(url, PATH_MAX, "ipc://%s/%s", ipc_dir, group->getID().c_str());
   DEBUG("client ipc url %s", url);
   Responder responder(zeromq_context, url);
 

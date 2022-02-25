@@ -35,10 +35,10 @@ const double SCHD_OVERHEAD = 2.0;
 
 class ClientGroup {
  public:
-  ClientGroup(std::string name, int cid, double baseq, double minq);
+  ClientGroup(std::string name,  double baseq, double minq);
   ~ClientGroup();
   const std::string &getName();
-  const int getID();
+  // const int getID();
   void updateConstraint(double minf, double maxf, double maxq, size_t mem_limit);
   void updateReturnTime(double overuse);
   void setBurst(double burst);
@@ -54,7 +54,7 @@ class ClientGroup {
 
  private:
   const std::string kName;
-  const int clientID;
+  // const int clientID;
   const double kBaseQuota;  // from command line argument
   const double kMinQuota;   // from command line argument
   double mem_limit_;
