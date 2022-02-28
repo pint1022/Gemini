@@ -659,7 +659,7 @@ int main(int argc, char *argv[]) {
   // read configuration file
   // DEBUG("%d: limit_file  %s ", __LINE__, limit_file);
   char fullpath[PATH_MAX];
-  snprintf(fullpath, PATH_MAX, "%s/%s", ipc_dir, limit_file);
+  snprintf(fullpath, PATH_MAX, "%s/%s", config_dir, limit_file);
   vector<ClientGroup *> groups = read_resource_config(fullpath);
 
   // create directory for IPC files
@@ -691,17 +691,17 @@ int main(int argc, char *argv[]) {
 
   // Watch for newcomers (new ClientGroup).
   GError *err = nullptr;
-  GFile *file = g_file_new_for_path(limit_file);
+  GFile *file = g_file_new_for_path(fullpath);
   if (file == nullptr) {
-    ERROR("Failed to construct GFile for %s", limit_file);
+    ERROR("Failed to construct GFile for %s", fullpath);
     exit(EXIT_FAILURE);
   }
   GFileMonitor *monitor = g_file_monitor(file, G_FILE_MONITOR_NONE, nullptr, &err);
   if (monitor == nullptr || err != nullptr) {
-    ERROR("Failed to create monitor for %s: %s", limit_file, err->message);
+    ERROR("Failed to create monitor for %s: %s", fullpath, err->message);
     exit(EXIT_FAILURE);
   }
-  INFO(" Monitor thread created.\n");
+  INFO(" Monitor thread created on %s.\n", fullpath);
 
   g_signal_connect(monitor, "changed", G_CALLBACK(onResourceConfigFileUpdate), nullptr);
 
