@@ -609,7 +609,7 @@ int main(int argc, char *argv[]) {
   while ((opt = getopt_long(argc, argv, optstring, opts, NULL)) != -1) {
     switch (opt) {
       case 'p':
-        strncpy(ipc_dir, optarg, PATH_MAX);
+        strncpy(config_dir, optarg, PATH_MAX);
         break;
       case 'q':
         QUOTA = atof(optarg);
@@ -664,7 +664,8 @@ int main(int argc, char *argv[]) {
 
   // create directory for IPC files
   if (g_mkdir_with_parents(ipc_dir, 0777) == 0) {
-    INFO("Create %s for IPC files", ipc_dir);
+    // INFO("Create %s for IPC files", ipc_dir);
+    INFO("Waiting for incoming connection", ipc_dir);
   } else {
     ERROR("Failed to create directory (%s) for IPC files: %s", ipc_dir, strerror(errno));
     zmq_ctx_term(zeromq_context);  // clean up
@@ -700,6 +701,7 @@ int main(int argc, char *argv[]) {
     ERROR("Failed to create monitor for %s: %s", limit_file, err->message);
     exit(EXIT_FAILURE);
   }
+  INFO(" Monitor thread created.\n");
 
   g_signal_connect(monitor, "changed", G_CALLBACK(onResourceConfigFileUpdate), nullptr);
 
