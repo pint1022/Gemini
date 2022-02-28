@@ -163,12 +163,12 @@ int main(int argc, char *argv[]) {
   if (pod_server_port_str != NULL) {
     POD_SERVER_PORT = atoi(pod_server_port_str);
   }
-  INFO("Pod server port = %u.", POD_SERVER_PORT);
 
   // scheduler
   char *scheduler_ip_envstr = getenv("SCHEDULER_IP");
   if (scheduler_ip_envstr != NULL) {
     strcpy(SCHEDULER_IP, scheduler_ip_envstr);
+    INFO("%d: Pod IP = %s, server port = %u.", __LINE__, scheduler_ip_envstr, POD_SERVER_PORT);
   }
   char *scheduler_port_envstr = getenv("SCHEDULER_PORT");
   if (scheduler_port_envstr != NULL) {
